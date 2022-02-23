@@ -18,7 +18,7 @@
 
 .card {
   flex: 1;
-  padding: 0px 20px;
+  padding: 0 20px;
 }
 
 .title {
@@ -32,4 +32,26 @@
 
 .motto {
   color: rgb(211, 211, 211);
+}
+
+@media screen and (max-width: 480px) {
+  .container {
+    height: auto;
+    text-align: center;
+  }
+  .item:first-child {
+    display: none;
+  }
+
+  .item {
+    flex-direction: column;
+  }
+
+  .title {
+    font-size: 30px;
+  }
+
+  .text {
+    font-size: 20px;
+  }
 }
