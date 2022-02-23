@@ -9,6 +9,20 @@
   cursor: pointer;
 }
 
+.container:hover {
+  background-color: #d1411e;
+}
+
+.container:hover .title {
+  color: rgb(221, 213, 213);
+}
+.container:hover .price {
+  color: white;
+}
+.container:hover .desc {
+  color: white;
+}
+
 .title {
   font-size: 18px;
   font-weight: bold;
