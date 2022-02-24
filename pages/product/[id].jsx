@@ -1,13 +1,17 @@
 import axios from "axios";
 import Image from "next/image";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addProduct, addQuantity } from "../../redux/cartSlice";
 import styles from "../../styles/Product.module.css";
 
 const Product = ({ pizza }) => {
+  const cart = useSelector((state) => state.cart);
   const [price, setPrice] = useState(pizza.prices[0]);
   const [size, setSize] = useState(0);
   const [extras, setExtras] = useState([]);
   const [quantity, setQuantity] = useState(1);
+  const dispatch = useDispatch();
 
   const changePrice = (number) => {
     setPrice(price + number);
@@ -29,6 +33,16 @@ const Product = ({ pizza }) => {
       changePrice(-option.price);
       setExtras(extras.filter((extra) => extra._id !== option._id));
     }
+  };
+
+  const handleClick = () => {
+    const found = cart.products.some(
+      (product) => product._id === { ...pizza }._id
+    );
+
+    !found
+      ? dispatch(addProduct({ ...pizza, extras, price, quantity }))
+      : dispatch(addQuantity({ ...pizza, extras, price, quantity }));
   };
 
   return (
@@ -76,10 +90,17 @@ const Product = ({ pizza }) => {
           <input
             type="number"
             defaultValue={1}
+            min={1}
             className={styles.quantity}
             onChange={(e) => setQuantity(e.target.value)}
           />
-          <button className={styles.button}>Add to Cart</button>
+          <button
+            disabled={quantity < 1}
+            className={styles.button}
+            onClick={handleClick}
+          >
+            Add to Cart
+          </button>
         </div>
       </div>
     </div>
